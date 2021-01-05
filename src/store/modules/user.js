@@ -16,9 +16,8 @@ const mutations = {
 const actions = {
   async login(context, data) {
     const result = await login(data)
-    if (result.data.success) {
-      context.commit('setToken', result.data.data)
-    }
+    // 失败的情况已经在响应拦截器中处理过了
+    context.commit('setToken', result.data)
   }
 }
 export default {
