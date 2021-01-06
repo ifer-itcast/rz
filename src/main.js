@@ -12,6 +12,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import * as directives from '@/directives'
 import '@/icons' // icon
 import '@/permission' // permission control
 
@@ -30,6 +31,10 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+// 注册自定义指令
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, directives[key])
+})
 
 new Vue({
   el: '#app',
