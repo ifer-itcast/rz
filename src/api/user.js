@@ -22,6 +22,12 @@ export function getUserInfo() {
   })
 }
 
-export function logout() {
-
+/**
+ * 根据用户 ID 获取详情
+ * @param {string} id
+ */
+export function getUserDetailById(id) {
+  return request({
+    url: `sys/user/${id}`
+  })
 }
