@@ -1,7 +1,8 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 const state = {
-  token: getToken()
+  token: getToken(),
+  userInfo: {}
 }
 const mutations = {
   setToken(state, token) {
@@ -11,6 +12,12 @@ const mutations = {
   removeToken(state) {
     state.token = null
     removeToken()
+  },
+  setUserInfo(state, result) {
+    state.userInfo = result
+  },
+  removeUserInfo(state) {
+    state.userInfo = {}
   }
 }
 const actions = {
@@ -19,6 +26,11 @@ const actions = {
     const result = await login(data)
     // 失败的情况已经在响应拦截器中处理过了
     context.commit('setToken', result)
+  },
+  async getUserInfo(context) {
+    const result = await getUserInfo()
+    context.commit('setUserInfo', result) // 设置到 Vuex
+    return result // 后续做权限处理时需要用到
   }
 }
 export default {
