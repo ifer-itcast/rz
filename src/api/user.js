@@ -17,7 +17,7 @@ export function login(data) {
  */
 export function getUserInfo() {
   return request({
-    type: 'POST',
+    method: 'POST',
     url: '/sys/profile'
   })
 }
