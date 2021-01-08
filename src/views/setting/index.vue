@@ -11,6 +11,7 @@
                 icon="el-icon-plus"
                 size="small"
                 type="primary"
+                @click="showDialog=true"
               >新增角色</el-button>
             </el-row>
             <!-- 表格 -->
@@ -79,7 +80,7 @@
 </template>
 
 <script>
-import { getRoleList, getCompanyInfo, deleteRole, getRoleDetail, updateRole } from '@/api/setting'
+import { getRoleList, getCompanyInfo, deleteRole, getRoleDetail, updateRole, addRole } from '@/api/setting'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -134,7 +135,10 @@ export default {
       }
     },
     btnCancel() {
-
+      this.roleForm = { name: '', description: '' }
+      // 重置并情况校验结果
+      this.$refs.roleForm.resetFields()
+      this.showDialog = false
     },
     async btnOK() {
       try {
@@ -144,6 +148,7 @@ export default {
           await updateRole(this.roleForm)
         } else {
           // 新增
+          await addRole(this.roleForm)
         }
         // 重新获取数据
         this.getRoleList()
