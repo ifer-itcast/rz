@@ -4,7 +4,7 @@
       <el-card class="tree-card">
         <tree-tools :tree-node="company" :is-root="true" @addDepts="addDepts" />
         <el-tree :data="departs" :props="defaultProps" default-expand-all>
-          <tree-tools slot-scope="{ data }" :tree-node="data" @delDepts="getDepartments" @addDepts="addDepts" />
+          <tree-tools slot-scope="{ data }" :tree-node="data" @delDepts="getDepartments" @addDepts="addDepts" @editDepts="editDepts" />
         </el-tree>
       </el-card>
     </div>
@@ -51,6 +51,10 @@ export default {
     addDepts(node) {
       this.showDialog = true
       // 记录当前项数据
+      this.node = node
+    },
+    editDepts(node) {
+      this.showDialog = true
       this.node = node
     }
   }
