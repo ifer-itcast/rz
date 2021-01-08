@@ -8,7 +8,7 @@
         </el-tree>
       </el-card>
     </div>
-    <add-dept :show-dialog.sync="showDialog" :tree-node="node" @addDepts="getDepartments" />
+    <add-dept ref="addDept" :show-dialog.sync="showDialog" :tree-node="node" @addDepts="getDepartments" />
   </div>
 </template>
 
@@ -56,6 +56,8 @@ export default {
     editDepts(node) {
       this.showDialog = true
       this.node = node
+      // 调用接口，获取详情，父组件调用子组件的方法
+      this.$refs.addDept.getDepartDetail(node.id)
     }
   }
 }

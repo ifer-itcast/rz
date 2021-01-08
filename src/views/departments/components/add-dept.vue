@@ -28,7 +28,7 @@
   </el-dialog>
 </template>
 <script>
-import { getDepartments, addDepartments } from '@/api/departments'
+import { getDepartments, addDepartments, getDepartDetail } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
 export default {
   props: {
@@ -90,6 +90,10 @@ export default {
   methods: {
     async  getEmployeeSimple() {
       this.peoples = await getEmployeeSimple()
+    },
+    // 获取不能详情
+    async getDepartDetail(id) {
+      this.formData = await getDepartDetail(id)
     },
     btnOk() {
       this.$refs.deptForm.validate(async isOK => {
