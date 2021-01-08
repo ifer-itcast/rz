@@ -13,6 +13,7 @@
 
 <script>
 import TreeTools from './components/tree-tools'
+import { getDepartments } from '@/api/departments'
 export default {
   components: {
     TreeTools
@@ -27,7 +28,18 @@ export default {
       defaultProps: {
         label: 'name'
       },
-      company: { name: '江苏传智播客教育科技股份有限公司', manager: '负责人' }
+      company: { name: '', manager: '' }
+    }
+  },
+  created() {
+    this.getDepartments()
+  },
+  methods: {
+    async getDepartments() {
+      const result = await getDepartments()
+      this.company = { name: result.companyName, manager: '负责人' }
+      this.departs = result.depts // TODO:需要将其转化成树形结构
+      console.log(result)
     }
   }
 }
