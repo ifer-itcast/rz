@@ -1,14 +1,24 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+    <page-tools :show-before="true">
+      <!-- <span slot="before">x</span> -->
+      <template v-slot:before>
+        <span>x</span>
+      </template>
+      <el-button slot="after" type="primary">导入 Excel</el-button>
+    </page-tools>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-
+import PageTools from '@/components/PageTools'
 export default {
   name: 'Dashboard',
+  components: {
+    PageTools
+  },
   computed: {
     ...mapGetters([
       'name'
