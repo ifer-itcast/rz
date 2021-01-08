@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { delDepartments } from '@/api/departments'
 export default {
   props: {
     treeNode: {
@@ -49,6 +50,13 @@ export default {
         // edit
       } else {
         // del
+        this.$confirm('确定要删除该部门吗').then(() => {
+          return delDepartments(this.treeNode.id)
+        }).then(() => {
+          // 通知父亲更新数据
+          this.$emit('delDepts')
+          this.$message.success('删除部门成功')
+        })
       }
     }
   }
