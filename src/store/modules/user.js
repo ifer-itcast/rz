@@ -1,4 +1,4 @@
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
 const state = {
   token: getToken(),
@@ -26,6 +26,8 @@ const actions = {
     const result = await login(data)
     // 失败的情况已经在响应拦截器中处理过了
     context.commit('setToken', result)
+    // 记录当前的时间戳
+    setTimeStamp()
   },
   async getUserInfo(context) {
     const result = await getUserInfo()
