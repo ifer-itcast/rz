@@ -8,3 +8,12 @@ export function getDepartments() {
     url: '/company/department'
   })
 }
+/**
+ * @param {string} 部门 id
+ */
+export function delDepartments(id) {
+  return request({
+    method: 'DELETE',
+    url: `/company/department/${id}`
+  })
+}
