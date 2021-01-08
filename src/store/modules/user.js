@@ -33,6 +33,12 @@ const actions = {
     const baseInfo = await getUserDetailById(result.userId)
     context.commit('setUserInfo', { ...result, ...baseInfo }) // 合并 2 个接口获取的结果并设置到 Vuex
     return result // 后续做权限处理时需要用到
+  },
+  logout(context) {
+    // 删除 token
+    context.commit('removeToken')
+    // 删除用户资料
+    context.commit('removeUserInfo')
   }
 }
 export default {
