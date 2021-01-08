@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="showDialog" @close="btnCancel">
+  <el-dialog :title="showTitle" :visible="showDialog" @close="btnCancel">
     <!-- 匿名插槽放置表单 -->
     <el-form ref="deptForm" label-width="120px" :model="formData" :rules="rules">
       <el-form-item label="部门名称" prop="name">
@@ -87,6 +87,11 @@ export default {
       peoples: [] // 员工简单信息列表
     }
   },
+  computed: {
+    showTitle() {
+      return this.formData.id ? '编辑部门' : '新增部门'
+    }
+  },
   methods: {
     async  getEmployeeSimple() {
       this.peoples = await getEmployeeSimple()
@@ -108,6 +113,8 @@ export default {
       })
     },
     btnCancel() {
+      // resetFields 只能重置表单上的数据，非表单上的，例如编辑的 id 不能重置
+      this.formData = { name: '', code: '', manager: '', introduce: '' }
       this.$refs.deptForm.resetFields()
       this.$emit('update:showDialog', false)
     }
