@@ -24,8 +24,10 @@ export function delDepartments(id) {
  * @param {object} data
  */
 export function addDepartments(data) {
+  console.log(233)
   return request({
-    type: 'POST',
+    // !这里不能写成 type，必须是 method，注意！
+    method: 'POST',
     url: '/company/department',
     data
   })
