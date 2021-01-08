@@ -43,7 +43,8 @@ export default {
   methods: {
     async getDepartments() {
       const result = await getDepartments()
-      this.company = { name: result.companyName, manager: '负责人' }
+      // !增加了 id 为空
+      this.company = { name: result.companyName, manager: '负责人', id: '' }
       // 列表转树
       this.departs = tranListToTreeData(result.depts, '')
     },
