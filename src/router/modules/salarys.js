@@ -8,7 +8,8 @@ export default {
     path: '', // 二级路由的默认路由
     component: () => import('@/views/salarys'),
     meta: {
-      title: '权限管理'
+      title: '薪资管理',
+      icon: 'money'
     }
   }]
 }
