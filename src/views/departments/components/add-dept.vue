@@ -97,6 +97,8 @@ export default {
           // 表示可以提交了
           await addDepartments({ ...this.formData, pid: this.treeNode.id })
           this.$emit('addDepts')
+          // update:props属性名
+          this.$emit('update:showDialog', false)
         }
       })
     }
