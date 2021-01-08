@@ -10,3 +10,13 @@ export function getRoleList(params) {
     params
   })
 }
+
+/**
+ * 获取指定公司信息
+ * @param {string} companyId
+ */
+export function getCompanyInfo(companyId) {
+  return request({
+    url: `/company/${companyId}`
+  })
+}
