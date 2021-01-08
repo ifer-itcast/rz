@@ -45,7 +45,14 @@ service.interceptors.response.use(response => {
     return Promise.reject(new Error(message))
   }
 }, error => {
-  // !之前我这里打错了
+  if (error && error.response && error.response.data.code === 10002) {
+    // 退出
+    store.dispatch('user/logout')
+    // 跳转
+    router.push('/login')
+    // 返回
+    return Promise.reject(new Error('TOKEN 超时了'))
+  }
   Message.error(error.message)
   return Promise.reject(error) // 返回执行错误，进入 catch
 })
