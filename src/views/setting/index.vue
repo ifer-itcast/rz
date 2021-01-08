@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { getRoleList, getCompanyInfo, deleteRole } from '@/api/setting'
+import { getRoleList, getCompanyInfo, deleteRole, getRoleDetail, updateRole } from '@/api/setting'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -133,9 +133,30 @@ export default {
         console.log(error)
       }
     },
-    btnCancel() {},
-    btnOK() {},
-    editRole(id) {
+    btnCancel() {
+
+    },
+    async btnOK() {
+      try {
+        await this.$refs.roleForm.validate()
+        if (this.roleForm.id) {
+          // 编辑
+          await updateRole(this.roleForm)
+        } else {
+          // 新增
+        }
+        // 重新获取数据
+        this.getRoleList()
+        this.$message.success('操作成功')
+        this.showDialog = false
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async editRole(id) {
+      // 获取详情并记录
+      this.roleForm = await getRoleDetail(id)
+      // 等数据获取完毕后再显示，能避免数据闪动
       this.showDialog = true
     }
   }
