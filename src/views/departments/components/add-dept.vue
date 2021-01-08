@@ -46,16 +46,32 @@ export default {
       // value 是部门名称，即 name
       // 要和同级部门的 name 去比较，不能有重复的
       const { depts } = await getDepartments()
-      // 筛选当前点击项的所有子部门
-      const isRepeat = depts.filter(item => item.pid === this.treeNode.id).some(item => item.name === value)
+      let isRepeat = false
+      if (this.formData.id) {
+        // 编辑
+        // 输入的名字不能和同级部门的其他名字重复，不包括自己
+        // depts.filter(item => item.pid === this.formData.pid)
+        isRepeat = depts.filter(item => item.pid === this.treeNode.pid && item.id !== this.treeNode.id).some(item => item.name === value)
+      } else {
+        // 新增
+        // 筛选当前点击项的所有子部门
+        isRepeat = depts.filter(item => item.pid === this.treeNode.id).some(item => item.name === value)
+      }
       isRepeat ? callback(new Error(`同级部门下已经存在${value}这个部门了`)) : callback()
     }
     // 检查编码重复
     const checkCodeRepeat = async(rule, value, callback) => {
       // 先要获取最新的组织架构数据
       const { depts } = await getDepartments()
-      // 并且 value 存在，不为空
-      const isRepeat = depts.some(item => item.code === value && value)
+      let isRepeat = false
+      if (this.formData.id) {
+        // 编辑
+        // 先把自己排除再和别人比，不能有一样的 code
+        isRepeat = depts.filter(item => item.id !== this.treeNode.id).some(item => item.code === value && value)
+      } else {
+        // 并且 value 存在，不为空
+        isRepeat = depts.some(item => item.code === value && value)
+      }
       isRepeat ? callback(new Error(`组织架构中已经有部门使用${value}编码`)) : callback()
     }
     return {
