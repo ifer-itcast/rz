@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="true">
+  <el-dialog title="新增部门" :visible="showDialog">
     <!-- 匿名插槽放置表单 -->
     <el-form label-width="120px">
       <el-form-item label="部门名称">
@@ -25,3 +25,13 @@
     </el-row>
   </el-dialog>
 </template>
+<script>
+export default {
+  props: {
+    showDialog: {
+      type: Boolean,
+      default: false
+    }
+  }
+}
+</script>

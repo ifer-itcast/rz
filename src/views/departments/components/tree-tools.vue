@@ -45,7 +45,7 @@ export default {
     operateDepts(type) {
       if (type === 'add') {
         // add
-        console.log('add')
+        this.$emit('addDepts', this.treeNode) // treeNode 代表当前部门的数据
       } else if (type === 'edit') {
         // edit
       } else {

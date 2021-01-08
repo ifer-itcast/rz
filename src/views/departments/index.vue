@@ -2,13 +2,13 @@
   <div class="dashboard-container">
     <div class="app-container">
       <el-card class="tree-card">
-        <tree-tools :tree-node="company" :is-root="true" />
+        <tree-tools :tree-node="company" :is-root="true" @addDepts="addDepts" />
         <el-tree :data="departs" :props="defaultProps" default-expand-all>
-          <tree-tools slot-scope="{ data }" :tree-node="data" @delDepts="getDepartments" />
+          <tree-tools slot-scope="{ data }" :tree-node="data" @delDepts="getDepartments" @addDepts="addDepts" />
         </el-tree>
       </el-card>
     </div>
-    <add-dept />
+    <add-dept :show-dialog="showDialog" />
   </div>
 </template>
 
@@ -32,7 +32,9 @@ export default {
       defaultProps: {
         label: 'name'
       },
-      company: { name: '', manager: '' }
+      company: { name: '', manager: '' },
+      showDialog: false,
+      node: null // 当前点击的列表项数据
     }
   },
   created() {
@@ -44,6 +46,11 @@ export default {
       this.company = { name: result.companyName, manager: '负责人' }
       // 列表转树
       this.departs = tranListToTreeData(result.depts, '')
+    },
+    addDepts(node) {
+      this.showDialog = true
+      // 记录当前项数据
+      this.node = node
     }
   }
 }
