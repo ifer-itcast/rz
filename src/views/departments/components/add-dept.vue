@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="showDialog">
+  <el-dialog title="新增部门" :visible="showDialog" @close="btnCancel">
     <!-- 匿名插槽放置表单 -->
     <el-form ref="deptForm" label-width="120px" :model="formData" :rules="rules">
       <el-form-item label="部门名称" prop="name">
@@ -22,7 +22,7 @@
     <el-row slot="footer" type="flex" justify="center">
       <el-col :span="6">
         <el-button type="primary" size="small" @click="btnOk">确定</el-button>
-        <el-button size="small">取消</el-button>
+        <el-button size="small" @click="btnCancel">取消</el-button>
       </el-col>
     </el-row>
   </el-dialog>
@@ -99,8 +99,13 @@ export default {
           this.$emit('addDepts')
           // update:props属性名
           this.$emit('update:showDialog', false)
+          // 关闭 dialog 会自动触发它的 close 事件，所以这里不需要重置数据和清空上次的校验结果了
         }
       })
+    },
+    btnCancel() {
+      this.$refs.deptForm.resetFields()
+      this.$emit('update:showDialog', false)
     }
   }
 }
