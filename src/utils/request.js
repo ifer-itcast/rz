@@ -45,6 +45,7 @@ service.interceptors.response.use(response => {
     return Promise.reject(new Error(message))
   }
 }, error => {
+  // !之前我这里打错了
   Message.error(error.message)
   return Promise.reject(error) // 返回执行错误，进入 catch
 })
