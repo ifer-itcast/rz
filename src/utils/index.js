@@ -1,8 +1,4 @@
 /**
- * Created by PanJiaChen on 16/11/18.
- */
-
-/**
  * Parse the time to string
  * @param {(Object|string|number)} time
  * @param {string} cFormat
@@ -114,4 +110,24 @@ export function param2Obj(url) {
     }
   })
   return obj
+}
+
+/**
+ * 列表结构转树
+ */
+export function tranListToTreeData(list, rootValue) {
+  const arr = []
+  // 所有根的 pid 为 ""
+  list.forEach(item => {
+    if (item.pid === rootValue) {
+      // 找子 item 下的节点
+      const children = tranListToTreeData(list, item.id)
+      if (children.length) {
+        // 找到了子节点
+        item.children = children
+      }
+      arr.push(item)
+    }
+  })
+  return arr
 }

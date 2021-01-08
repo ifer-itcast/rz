@@ -14,6 +14,7 @@
 <script>
 import TreeTools from './components/tree-tools'
 import { getDepartments } from '@/api/departments'
+import { tranListToTreeData } from '@/utils'
 export default {
   components: {
     TreeTools
@@ -38,8 +39,8 @@ export default {
     async getDepartments() {
       const result = await getDepartments()
       this.company = { name: result.companyName, manager: '负责人' }
-      this.departs = result.depts // TODO:需要将其转化成树形结构
-      console.log(result)
+      // 列表转树
+      this.departs = tranListToTreeData(result.depts, '')
     }
   }
 }
