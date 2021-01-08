@@ -28,7 +28,7 @@
   </el-dialog>
 </template>
 <script>
-import { getDepartments, addDepartments, getDepartDetail } from '@/api/departments'
+import { getDepartments, addDepartments, getDepartDetail, updateDepartments } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
 export default {
   props: {
@@ -103,8 +103,13 @@ export default {
     btnOk() {
       this.$refs.deptForm.validate(async isOK => {
         if (isOK) {
-          // 表示可以提交了
-          await addDepartments({ ...this.formData, pid: this.treeNode.id })
+          if (this.formData.id) {
+            // 编辑
+            await updateDepartments(this.formData)
+          } else {
+            // 添加
+            await addDepartments({ ...this.formData, pid: this.treeNode.id })
+          }
           this.$emit('addDepts')
           // update:props属性名
           this.$emit('update:showDialog', false)
