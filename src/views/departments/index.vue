@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="app-container">
       <el-card class="tree-card">
-        <el-row type="flex" justify="space-between">
+        <el-row type="flex" justify="space-between" align="middle" style="height: 40px;">
           <el-col>
             <span>江苏传智播客教育科技股份有限公司</span>
           </el-col>
@@ -22,6 +22,7 @@
             </el-row>
           </el-col>
         </el-row>
+        <el-tree :data="list" :props="defaultProps" default-expand-all />
       </el-card>
     </div>
   </div>
@@ -29,7 +30,49 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      list: [{
+        label: '一级 1',
+        children: [{
+          label: '二级 1-1',
+          children: [{
+            label: '三级 1-1-1'
+          }]
+        }]
+      }, {
+        label: '一级 2',
+        children: [{
+          label: '二级 2-1',
+          children: [{
+            label: '三级 2-1-1'
+          }]
+        }, {
+          label: '二级 2-2',
+          children: [{
+            label: '三级 2-2-1'
+          }]
+        }]
+      }, {
+        label: '一级 3',
+        children: [{
+          label: '二级 3-1',
+          children: [{
+            label: '三级 3-1-1'
+          }]
+        }, {
+          label: '二级 3-2',
+          children: [{
+            label: '三级 3-2-1'
+          }]
+        }]
+      }],
+      defaultProps: {
+        label: 'label', // 去 name 字段找显示的内容
+        children: 'children'
+      }
+    }
+  }
 }
 </script>
 
