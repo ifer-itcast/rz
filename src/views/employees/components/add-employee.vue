@@ -18,7 +18,14 @@
         <el-input v-model="formData.workNumber" style="width:50%" placeholder="请输入工号" />
       </el-form-item>
       <el-form-item label="部门" prop="departmentName">
-        <el-input v-model="formData.departmentName" style="width:50%" placeholder="请选择部门" />
+        <el-input v-model="formData.departmentName" style="width:50%" placeholder="请选择部门" @focus="getDepartments" />
+        <el-tree
+          v-if="showTree"
+          v-loading="loading"
+          :data="treeData"
+          default-expand-all=""
+          :props="{ label: 'name' }"
+        />
       </el-form-item>
       <el-form-item label="转正时间" prop="correctionTime">
         <el-date-picker v-model="formData.correctionTime" style="width:50%" placeholder="请选择日期" />
@@ -37,6 +44,8 @@
 </template>
 
 <script>
+import { getDepartments } from '@/api/departments'
+import { tranListToTreeData } from '@/utils'
 export default {
   props: {
     showDialog: {
@@ -74,7 +83,20 @@ export default {
           { required: true, message: '部门不能为空', trigger: 'change' }
         ],
         timeOfEntry: [{ required: true, message: '入职时间', trigger: 'blur' }]
-      }
+      },
+      treeData: [], // 定义数组接收树形数据
+      showTree: false, // 控制树形的显示或者隐藏
+      loading: false // 控制树的显示或者隐藏进度条
+    }
+  },
+  methods: {
+    async getDepartments() {
+      this.showTree = true
+      this.loading = true
+      const { depts } = await getDepartments()
+      // depts是数组 但不是树形
+      this.treeData = tranListToTreeData(depts, '')
+      this.loading = false
     }
   }
 }
