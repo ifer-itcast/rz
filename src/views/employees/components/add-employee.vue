@@ -38,7 +38,7 @@
     <template v-slot:footer>
       <el-row type="flex" justify="center">
         <el-col :span="6">
-          <el-button size="small">取消</el-button>
+          <el-button size="small" @click="btnCancel">取消</el-button>
           <el-button type="primary" size="small" @click="btnOK">确定</el-button>
         </el-col>
       </el-row>
