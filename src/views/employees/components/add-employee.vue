@@ -12,7 +12,9 @@
         <el-date-picker v-model="formData.timeOfEntry" style="width:50%" placeholder="请选择日期" />
       </el-form-item>
       <el-form-item label="聘用形式" prop="formOfEmployment">
-        <el-select v-model="formData.formOfEmployment" style="width:50%" placeholder="请选择" />
+        <el-select v-model="formData.formOfEmployment" style="width:50%" placeholder="请选择">
+          <el-option v-for="item in EmployeeEnum.hireType" :key="item.id" :label="item.value" :value="item.id" />
+        </el-select>
       </el-form-item>
       <el-form-item label="工号" prop="workNumber">
         <el-input v-model="formData.workNumber" style="width:50%" placeholder="请输入工号" />
@@ -25,6 +27,7 @@
           :data="treeData"
           default-expand-all=""
           :props="{ label: 'name' }"
+          @node-click="selectNode"
         />
       </el-form-item>
       <el-form-item label="转正时间" prop="correctionTime">
@@ -46,6 +49,7 @@
 <script>
 import { getDepartments } from '@/api/departments'
 import { tranListToTreeData } from '@/utils'
+import EmployeeEnum from '@/api/constant/employees'
 export default {
   props: {
     showDialog: {
@@ -84,9 +88,10 @@ export default {
         ],
         timeOfEntry: [{ required: true, message: '入职时间', trigger: 'blur' }]
       },
-      treeData: [], // 定义数组接收树形数据
-      showTree: false, // 控制树形的显示或者隐藏
-      loading: false // 控制树的显示或者隐藏进度条
+      treeData: [],
+      showTree: false,
+      loading: false,
+      EmployeeEnum
     }
   },
   methods: {
@@ -97,6 +102,10 @@ export default {
       // depts是数组 但不是树形
       this.treeData = tranListToTreeData(depts, '')
       this.loading = false
+    },
+    selectNode(node) {
+      this.formData.departmentName = node.name
+      this.showTree = false
     }
   }
 }
