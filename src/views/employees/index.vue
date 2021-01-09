@@ -49,13 +49,18 @@
         </el-row>
       </el-card>
     </div>
+    <add-employee />
   </div>
 </template>
 
 <script>
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
+import AddEmployee from './components/add-employee'
 export default {
+  components: {
+    AddEmployee
+  },
   data() {
     return {
       loading: false,
