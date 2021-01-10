@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
-    <page-tools :show-before="true">
-      <!-- <span slot="before">x</span> -->
+    <!-- <page-tools :show-before="true">
       <template v-slot:before>
         <span>x</span>
       </template>
       <el-button slot="after" type="primary">导入 Excel</el-button>
-    </page-tools>
+    </page-tools> -->
+    <upload-excel />
   </div>
 </template>
 
