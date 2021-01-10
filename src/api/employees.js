@@ -42,3 +42,15 @@ export function addEmployee(data) {
     data
   })
 }
+
+/**
+ * 导入员工数据
+ * @param {object} data
+ */
+export function importEmployee(data) {
+  return request({
+    url: '/sys/user/batch',
+    method: 'post',
+    data
+  })
+}

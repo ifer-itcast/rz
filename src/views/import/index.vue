@@ -1,17 +1,15 @@
 <template>
-  <upload-excel />
+  <upload-excel :on-success="success" />
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'Import',
+  methods: {
+    success({ header, results }) {
 
-  data() {
-    return {
     }
-  },
-
-  methods: {}
+  }
 }
 </script>
 
