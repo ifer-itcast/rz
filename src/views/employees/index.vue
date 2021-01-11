@@ -12,8 +12,9 @@
       <!-- 放置表格和分页 -->
       <el-card v-loading="loading">
         <el-table border :data="list">
-          <el-table-column label="序号" sortable="" type="index" />
+          <el-table-column width="60" label="序号" sortable="" type="index" />
           <el-table-column label="姓名" sortable="" prop="username" />
+          <el-table-column label="手机号" sortable="" prop="mobile" />
           <el-table-column label="工号" sortable="" prop="workNumber" />
           <el-table-column label="聘用形式" sortable="" prop="formOfEmployment" :formatter="formatEmployment" />
           <el-table-column label="部门" sortable="" prop="departmentName" />
