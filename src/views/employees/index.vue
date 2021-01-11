@@ -5,7 +5,7 @@
         <span slot="before">共166条记录</span>
         <template slot="after">
           <el-button size="small" type="success" @click="$router.push('/import')">Excel 导入</el-button>
-          <el-button size="small" type="danger">导出</el-button>
+          <el-button size="small" type="danger" @click="exportData">导出</el-button>
           <el-button size="small" type="primary" @click="showDialog = true">新增员工</el-button>
         </template>
       </page-tools>
@@ -103,6 +103,15 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    exportData() {
+      import('@/vendor/Export2Excel').then(excel => {
+        excel.export_json_to_excel({
+          header: ['姓名', '工资'], // 表头 必填
+          data: [['张三', 3000], ['李四', 5000]], // 具体数据 必填
+          filename: '员工工资表' // 非必填
+        })
+      })
     }
   }
 }
