@@ -104,11 +104,30 @@ export default {
         console.log(error)
       }
     },
+    formatJson(headers, rows) {
+      return rows.map(item => Object.keys(headers).map(key => item[headers[key]]))
+    },
     exportData() {
-      import('@/vendor/Export2Excel').then(excel => {
-        excel.export_json_to_excel({
+      const headers = {
+        '手机号': 'mobile',
+        '姓名': 'username',
+        '入职日期': 'timeOfEntry',
+        '聘用形式': 'formOfEmployment',
+        '转正日期': 'correctionTime',
+        '工号': 'workNumber',
+        '部门': 'departmentName'
+      }
+      import('@/vendor/Export2Excel').then(async excel => {
+        /* excel.export_json_to_excel({
           header: ['姓名', '工资'], // 表头 必填
           data: [['张三', 3000], ['李四', 5000]], // 具体数据 必填
+          filename: '员工工资表' // 非必填
+        }) */
+        const { rows } = await getEmployeeList({ page: 1, size: this.page.total })
+        const data = this.formatJson(headers, rows)
+        excel.export_json_to_excel({
+          header: Object.keys(headers), // 表头 必填
+          data, // 具体数据 必填
           filename: '员工工资表' // 非必填
         })
       })
