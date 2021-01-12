@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-upload list-type="picture-card" :limit="1" action="#" :on-preview="preview" :on-remove="handleRemove" :on-change="changeFile" :file-list="fileList" :class="{disabled: fileComputed }">
+    <el-upload list-type="picture-card" :limit="1" action="#" :on-preview="preview" :on-remove="handleRemove" :on-change="changeFile" :before-upload="beforeUpload" :file-list="fileList" :class="{disabled: fileComputed }">
       <i class="el-icon-plus" />
     </el-upload>
     <el-dialog title="图片" :visible.sync="showDialog">
@@ -38,6 +38,21 @@ export default {
       // 会执行多次
       this.fileList = fileList.map(item => item)
       // 上传成功 -> 数据才能进来 -> 腾讯云 OS
+    },
+    beforeUpload(file) {
+      // 文件类型、文件大小
+      const types = ['image/jpeg', 'image/gif', 'image/bmp', 'image/png']
+      if (!types.includes(file.type)) {
+        this.$message.error('上传图片只能是 JPG、GIF、BMP、PNG 格式!')
+        return false
+      }
+      // 检查大小
+      const maxSize = 5 * 1024 * 1024
+      if (maxSize < file.size) {
+        this.$message.error('图片大小最大不能超过5M')
+        return false
+      }
+      return true
     }
   }
 }
