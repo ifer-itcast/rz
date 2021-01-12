@@ -14,6 +14,7 @@
     >
       <i class="el-icon-plus" />
     </el-upload>
+    <el-progress v-if="showPercent" style="width: 180px" :percentage="percent" />
     <el-dialog title="图片" :visible.sync="showDialog">
       <img :src="imgUrl" style="width:100%" alt="">
     </el-dialog>
@@ -32,7 +33,10 @@ export default {
         url: 'http://file01.16sucai.com/d/file/2011/0801/20110801111724537.jpg'
       }], // 图片地址设置为数组
       showDialog: false, // 控制显示弹层
-      imgUrl: ''
+      imgUrl: '',
+      currentFileUid: '',
+      percent: 0,
+      showPercent: false
     }
   },
   computed: {
@@ -63,11 +67,14 @@ export default {
         return false
       }
       // 检查大小
-      const maxSize = 5 * 1024 * 1024
+      const maxSize = 10 * 1024 * 1024
       if (maxSize < file.size) {
-        this.$message.error('图片大小最大不能超过5M')
+        this.$message.error('图片大小最大不能超过10M')
         return false
       }
+      // 记住当前的 uid
+      this.currentFileUid = file.uid
+      this.showPercent = true
       return true
     },
     upload(params) {
@@ -77,7 +84,10 @@ export default {
           Region: 'ap-nanjing', // 地域
           Key: params.file.name, // 文件名
           Body: params.file, // 要上传的文件对象
-          StorageClass: 'STANDARD' // 上传的模式类型 直接默认 标准模式即可
+          StorageClass: 'STANDARD', // 上传的模式类型 直接默认 标准模式即可
+          onProgress: (params) => {
+            this.percent = params.percent * 100
+          }
         }, (err, data) => {
           if (!err && data.statusCode === 200) {
             this.fileList = this.fileList.map(item => {
@@ -86,6 +96,10 @@ export default {
               }
               return item
             })
+            setTimeout(() => {
+              this.showPercent = false // 隐藏进度条
+              this.percent = 0 // 进度归0
+            }, 2000)
           }
         })
       }
