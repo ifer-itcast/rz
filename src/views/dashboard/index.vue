@@ -7,7 +7,8 @@
       </template>
       <el-button slot="after" type="primary">导入 Excel</el-button>
     </page-tools> -->
-    <upload-excel />
+    <!-- <upload-excel /> -->
+    <image-upload />
   </div>
 </template>
 
