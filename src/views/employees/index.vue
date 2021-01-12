@@ -22,6 +22,7 @@
                 :src="row.staffPhoto "
                 style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
                 alt=""
+                @click="showQrCode(row.staffPhoto)"
               >
             </template>
           </el-table-column>
@@ -62,10 +63,17 @@
       </el-card>
     </div>
     <add-employee :show-dialog.sync="showDialog" />
+    <!-- @opened="showQrCode" -->
+    <el-dialog title="二维码" :visible.sync="showCodeDialog" @close="imgUrl=''">
+      <el-row type="flex" justify="center">
+        <canvas ref="myCanvas" />
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import QrCode from 'qrcode'
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee'
@@ -83,7 +91,8 @@ export default {
         size: 10,
         total: 0
       },
-      showDialog: false
+      showDialog: false,
+      showCodeDialog: false
     }
   },
   created() {
@@ -158,6 +167,16 @@ export default {
           merges // 合并选项
         })
       })
+    },
+    showQrCode(url) {
+      if (url) {
+        this.showCodeDialog = true
+        this.$nextTick(() => {
+          QrCode.toCanvas(this.$refs.myCanvas, url)
+        })
+      } else {
+        this.$message.warning('该用户还未上传头像')
+      }
     }
   }
 }
