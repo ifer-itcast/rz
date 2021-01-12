@@ -362,24 +362,34 @@ export default {
   methods: {
     async getUserDetailById() {
       this.userInfo = await getUserDetailById(this.userId)
-      if (this.userInfo.staffPhoto) {
+      if (this.userInfo.staffPhoto && this.userInfo.staffPhoto.trim()) {
         // 这里我们赋值，同时需要给赋值的地址一个标记 upload: true
         this.$refs.staffPhoto.fileList = [{ url: this.userInfo.staffPhoto, upload: true }]
       }
     },
     async getPersonalDetail() {
       this.formData = await getPersonalDetail(this.userId)
-      if (this.formData.staffPhoto) {
+      if (this.formData.staffPhoto && this.formData.staffPhoto.trim()) {
         this.$refs.myStaffPhoto.fileList = [{ url: this.formData.staffPhoto, upload: true }]
       }
     },
-    async savePersonal() {
-      await updatePersonal({ ...this.formData, id: this.userId })
-      this.$message.success('保存成功')
-    },
     async saveUser() {
-      await saveUserDetailById(this.userInfo)
-      this.$message.success('保存成功')
+      const fileList = this.$refs.staffPhoto.fileList
+      if (fileList.some(item => !item.upload)) {
+        this.$message.warning('您当前还有图片没有上传完成！')
+        return
+      }
+      await saveUserDetailById({ ...this.userInfo, staffPhoto: fileList && fileList.length ? fileList[0].url : ' ' })
+      this.$message.success('保存基本信息成功')
+    },
+    async savePersonal() {
+      const fileList = this.$refs.myStaffPhoto.fileList
+      if (fileList.some(item => !item.upload)) {
+        this.$message.warning('您当前还有图片没有上传完成！')
+        return
+      }
+      await updatePersonal({ ...this.formData, staffPhoto: fileList && fileList.length ? fileList[0].url : ' ' })
+      this.$message.success('保存基础信息成功')
     }
   }
 }
