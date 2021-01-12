@@ -21,6 +21,33 @@
         </el-table-column>
       </el-table>
     </div>
+    <el-dialog :title="`${showText}权限点`" :visible="showDialog" @close="btnCancel">
+      <!-- 表单 -->
+      <el-form ref="perForm" :model="formData" :rules="rules" label-width="120px">
+        <el-form-item label="权限名称" prop="name">
+          <el-input v-model="formData.name" style="width:90%" />
+        </el-form-item>
+        <el-form-item label="权限标识" prop="code">
+          <el-input v-model="formData.code" style="width:90%" />
+        </el-form-item>
+        <el-form-item label="权限描述">
+          <el-input v-model="formData.description" style="width:90%" />
+        </el-form-item>
+        <el-form-item label="开启">
+          <el-switch
+            v-model="formData.enVisible"
+            active-value="1"
+            inactive-value="0"
+          />
+        </el-form-item>
+      </el-form>
+      <el-row slot="footer" type="flex" justify="center">
+        <el-col :span="6">
+          <el-button size="small" type="primary" @click="btnOK">确定</el-button>
+          <el-button size="small" @click="btnCancel">取消</el-button>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -56,7 +83,18 @@ export default {
   methods: {
     async getPermissionList() {
       this.list = tranListToTreeData(await getPermissionList(), '0')
-    }
+    },
+    btnOK() {},
+    btnCancel() {
+      this.showDialog = false
+    },
+    addPermission() {
+      this.showDialog = true
+    },
+    editPermission() {
+      this.showDialog = true
+    },
+    delPermission() {}
   }
 }
 </script>
