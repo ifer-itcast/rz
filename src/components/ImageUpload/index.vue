@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-upload list-type="picture-card" :limit="1" action="#" :on-preview="preview" :file-list="fileList">
+    <el-upload list-type="picture-card" :limit="1" action="#" :on-preview="preview" :file-list="fileList" :class="{disabled: fileComputed }">
       <i class="el-icon-plus" />
     </el-upload>
     <el-dialog title="图片" :visible.sync="showDialog">
@@ -19,6 +19,12 @@ export default {
       imgUrl: ''
     }
   },
+  computed: {
+    // 判断是否已经上传完了一张
+    fileComputed() {
+      return this.fileList.length === 1
+    }
+  },
   methods: {
     preview(file) {
       this.imgUrl = file.url
@@ -27,3 +33,8 @@ export default {
   }
 }
 </script>
+<style>
+.disabled .el-upload--picture-card {
+  display: none
+}
+</style>
