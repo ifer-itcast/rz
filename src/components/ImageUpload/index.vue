@@ -1,6 +1,17 @@
 <template>
   <div>
-    <el-upload list-type="picture-card" :limit="1" action="#" :on-preview="preview" :on-remove="handleRemove" :on-change="changeFile" :before-upload="beforeUpload" :file-list="fileList" :class="{disabled: fileComputed }">
+    <el-upload
+      list-type="picture-card"
+      :limit="1"
+      action="#"
+      :on-preview="preview"
+      :on-remove="handleRemove"
+      :on-change="changeFile"
+      :before-upload="beforeUpload"
+      :http-request="upload"
+      :file-list="fileList"
+      :class="{ disabled: fileComputed }"
+    >
       <i class="el-icon-plus" />
     </el-upload>
     <el-dialog title="图片" :visible.sync="showDialog">
@@ -9,6 +20,11 @@
   </div>
 </template>
 <script>
+import COS from 'cos-js-sdk-v5'
+const cos = new COS({
+  SecretId: 'AKIDQmu0HrSQcZeU3cqA4iCcmgYidIhrQrjy',
+  SecretKey: 'jDRPmTx8rrdBTWXINPltwjKvJRmqfEYl'
+})
 export default {
   data() {
     return {
@@ -53,12 +69,26 @@ export default {
         return false
       }
       return true
+    },
+    upload(params) {
+      if (params.file) {
+        cos.putObject({
+          Bucket: 'ifer-1253924894', // 存储桶
+          Region: 'ap-nanjing', // 地域
+          Key: params.file.name, // 文件名
+          Body: params.file, // 要上传的文件对象
+          StorageClass: 'STANDARD' // 上传的模式类型 直接默认 标准模式即可
+        }, function(err, data) {
+          // data返回数据之后 应该如何处理
+          console.log(err || data)
+        })
+      }
     }
   }
 }
 </script>
 <style>
 .disabled .el-upload--picture-card {
-  display: none
+  display: none;
 }
 </style>
