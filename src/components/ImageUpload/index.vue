@@ -78,9 +78,15 @@ export default {
           Key: params.file.name, // 文件名
           Body: params.file, // 要上传的文件对象
           StorageClass: 'STANDARD' // 上传的模式类型 直接默认 标准模式即可
-        }, function(err, data) {
-          // data返回数据之后 应该如何处理
-          console.log(err || data)
+        }, (err, data) => {
+          if (!err && data.statusCode === 200) {
+            this.fileList = this.fileList.map(item => {
+              if (item.uid === this.currentFileUid) {
+                return { url: 'http://' + data.Location, upload: true }
+              }
+              return item
+            })
+          }
         })
       }
     }
