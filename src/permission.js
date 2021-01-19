@@ -19,10 +19,15 @@ router.beforeEach(async(to, from, next) => {
     } else {
       if (!store.getters.userId) {
         // 如果没有 userId 表示当前用户资料没有获取过
-        await store.dispatch('user/getUserInfo')
+        const { roles } = await store.dispatch('user/getUserInfo')
         // 如果后续需要根据用户资料获取数据的话，这里务必改成同步的
+        // 筛选当前用户的可用动态路由
+        const routes = await store.dispatch('permission/filterRoutes', roles.menus)
+        router.addRoutes(routes)
+        next(to.path)
+      } else {
+        next()
       }
-      next()
     }
   } else {
     // 无 token
