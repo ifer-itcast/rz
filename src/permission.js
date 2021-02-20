@@ -17,6 +17,7 @@ router.beforeEach(async(to, from, next) => {
       // 如果要访问的是登录页，跳转到主页
       next('/')
     } else {
+      // !Navbar 组件的 created 钩子里面调用获取用户信息的 Action 是不是也 ok 呢？
       if (!store.getters.userId) {
         // 如果没有 userId 表示当前用户资料没有获取过
         await store.dispatch('user/getUserInfo')
