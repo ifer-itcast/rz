@@ -17,6 +17,8 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   if (store.getters.token) {
     if (isCheckTimeOut()) {
+      // !#3
+      console.log('#3')
       // 退出
       store.dispatch('user/logout')
       // 跳转
@@ -45,6 +47,8 @@ service.interceptors.response.use(response => {
     return Promise.reject(new Error(message))
   }
 }, error => {
+  // !#4
+  console.log('#4')
   // !之前我这里打错了
   Message.error(error.message)
   return Promise.reject(error) // 返回执行错误，进入 catch

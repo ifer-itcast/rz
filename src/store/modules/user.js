@@ -26,11 +26,17 @@ const actions = {
     const result = await login(data)
     // 失败的情况已经在响应拦截器中处理过了
     context.commit('setToken', result)
-    // 记录当前的时间戳
+    // !记录当前的时间戳
     setTimeStamp()
   },
   async getUserInfo(context) {
+    // !#2
+    console.log('#2')
     const result = await getUserInfo()
+    /* const result = await getUserInfo().catch(e => {
+      // !#5
+      console.log(e)
+    }) */
     // 获取用户ID获取用户的详情
     const baseInfo = await getUserDetailById(result.userId)
     context.commit('setUserInfo', { ...result, ...baseInfo }) // 合并 2 个接口获取的结果并设置到 Vuex

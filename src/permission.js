@@ -19,6 +19,8 @@ router.beforeEach(async(to, from, next) => {
     } else {
       if (!store.getters.userId) {
         // 如果没有 userId 表示当前用户资料没有获取过
+        // !#1
+        console.log('#1')
         await store.dispatch('user/getUserInfo')
         // 如果后续需要根据用户资料获取数据的话，这里务必改成同步的
       }

@@ -75,7 +75,6 @@ export default {
   name: 'Login',
   data() {
     const validateMobile = (rule, value, callback) => {
-      console.log(rule, 2)
       validMobile(value) ? callback() : callback(new Error('请输入正确的手机号'))
     }
     return {
@@ -124,6 +123,7 @@ export default {
         if (isOk) {
           try {
             this.loading = true
+            // !三件事情：存储 Token 到 Store 和 Cookie、记录当前时间戳
             await this['user/login'](this.loginForm)
             this.$router.push('/')
           } catch (error) {
