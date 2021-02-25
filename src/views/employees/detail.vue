@@ -19,6 +19,8 @@
           </el-tab-pane>
           <el-tab-pane label="个人详情">
             <!-- <user-info /> -->
+            <!-- 不在 data 中注册变量的情况下，可以如下写法 -->
+            <!-- <component :is="'user-info'" /> -->
             <component :is="UserComponent" />
           </el-tab-pane>
           <el-tab-pane label="岗位信息" />
