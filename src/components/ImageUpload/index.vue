@@ -37,6 +37,8 @@ export default {
     changeFile(file, fileList) {
       // 会执行多次
       this.fileList = fileList.map(item => item)
+      // 上面之所以出不来，原因是上面的操作方式 this.fileList 最终还是为空数组，可如下写法
+      // fileList.length && (this.fileList = fileList.map(item => ({ url: item.url })))
       // 上传成功 -> 数据才能进来 -> 腾讯云 OS
     }
   }
