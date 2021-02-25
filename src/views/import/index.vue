@@ -33,6 +33,7 @@ export default {
       this.$message.success('导入成功')
       this.$router.back()
     },
+    // 数字转日期
     formatDate(numb, format) {
       const time = new Date((numb - 1) * 24 * 3600000 + 1)
       time.setYear(time.getFullYear() - 70)
