@@ -19,7 +19,7 @@
               <img
                 slot="reference"
                 v-imgerror="require('@/assets/common/bigUserHeader.png')"
-                :src="row.staffPhoto "
+                :src="row.staffPhoto"
                 style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
                 alt=""
               >

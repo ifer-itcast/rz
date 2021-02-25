@@ -8,6 +8,7 @@ export const imgerror = {
     }
   },
   componentUpdated(dom, options) {
+    // 组件更新后会触发
     dom.src = dom.src || options.value
   }
 }
