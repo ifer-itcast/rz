@@ -52,6 +52,7 @@ export default {
     },
     changeFile(file, fileList) {
       // 会执行多次
+      // !当定义了 http-request 属性时这里也会只触发一次，能拿到 blob 数据实现图片展示效果
       this.fileList = fileList.map(item => item)
       // 上传成功 -> 数据才能进来 -> 腾讯云 OS
     },
@@ -68,6 +69,8 @@ export default {
         this.$message.error('图片大小最大不能超过5M')
         return false
       }
+      // 记录上传文件的 uid
+      this.currentFileUid = file.uid
       return true
     },
     upload(params) {
