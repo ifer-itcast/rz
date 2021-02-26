@@ -19,6 +19,8 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import * as filters from '@/filters'
 
+import CheckPermission from '@/mixin/checkPermission'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -33,7 +35,8 @@ Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 Vue.use(Components)
-
+// 全局混入检查对象
+Vue.mixin(CheckPermission)
 Vue.config.productionTip = false
 // 注册自定义指令
 Object.keys(directives).forEach(key => {
