@@ -23,7 +23,7 @@ router.beforeEach(async(to, from, next) => {
         // 如果后续需要根据用户资料获取数据的话，这里务必改成同步的
         // 筛选当前用户的可用动态路由
         const routes = await store.dispatch('permission/filterRoutes', roles.menus)
-        router.addRoutes(routes)
+        router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }])
         next(to.path)
       } else {
         next()
