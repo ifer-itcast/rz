@@ -133,3 +133,6 @@ export function updateUser(data) {
     data
   })
 }
+
+export function information() {}
+export function reviewHistory() {}

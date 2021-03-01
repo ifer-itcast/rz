@@ -131,3 +131,5 @@ export function tranListToTreeData(list, rootValue) {
   })
   return arr
 }
+
+export function transListToTreeData() {}
