@@ -7,6 +7,7 @@ export default {
   children: [{
     path: '', // 二级路由的默认路由
     component: () => import('@/views/setting'),
+    name: 'settings',
     meta: {
       title: '公司设置',
       icon: 'setting'
