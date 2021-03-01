@@ -12,6 +12,8 @@
     <!-- <breadcrumb class="breadcrumb-container" /> -->
 
     <div class="right-menu">
+      <!-- 多语言 -->
+      <lang-select class="right-menu-item" />
       <!-- 全屏插件 -->
       <screen-full class="right-menu-item" />
       <!-- 切换主题 -->
