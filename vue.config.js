@@ -90,7 +90,11 @@ module.exports = {
         include: 'initial'
       }
     ])
-
+    // !注入 cdn 变量
+    config.plugin('html').tap((args) => {
+      args[0].cdn = cdn
+      return args
+    })
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
 
