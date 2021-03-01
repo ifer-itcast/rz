@@ -21,6 +21,8 @@ import * as filters from '@/filters'
 
 import CheckPermission from '@/mixin/checkPermission'
 
+import i18n from '@/lang'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -52,5 +54,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })
