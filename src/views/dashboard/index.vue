@@ -10,7 +10,10 @@
           <div class="headInfoTip">
             <p class="firstChild">早安，{{ name }}，祝你开心每一天！</p>
             <!-- <p class="lastChild">{{ name }} | {{ $store .state .user .userInfo .company }} | {{ $store .state .user .userInfo .departmentName }}</p> -->
-            <p class="lastChild">{{ name }} | {{ userInfo .company }} | {{ userInfo .departmentName }}</p>
+            <p class="lastChild">
+              {{ name }} | {{ userInfo.company }} |
+              {{ userInfo.departmentName }}
+            </p>
           </div>
         </div>
         <div class="fr" />
@@ -31,14 +34,17 @@
         <!-- 公告 -->
         <el-card class="box-card">
           <div class="advContent">
-            <div class="title"> 公告</div>
+            <div class="title">公告</div>
             <div class="contentItem">
               <ul class="noticeList">
                 <li>
                   <div class="item">
                     <img src="@/assets/common/img.jpeg" alt="">
                     <div>
-                      <p><span class="col">朱继柳</span> 发布了 第1期“传智大讲堂”互动讨论获奖名单公布</p>
+                      <p>
+                        <span class="col">朱继柳</span> 发布了
+                        第1期“传智大讲堂”互动讨论获奖名单公布
+                      </p>
                       <p>2018-07-21 15:21:38</p>
                     </div>
                   </div>
@@ -47,7 +53,10 @@
                   <div class="item">
                     <img src="@/assets/common/img.jpeg" alt="">
                     <div>
-                      <p><span class="col">朱继柳</span> 发布了 第2期“传智大讲堂”互动讨论获奖名单公布</p>
+                      <p>
+                        <span class="col">朱继柳</span> 发布了
+                        第2期“传智大讲堂”互动讨论获奖名单公布
+                      </p>
                       <p>2018-07-21 15:21:38</p>
                     </div>
                   </div>
@@ -56,7 +65,10 @@
                   <div class="item">
                     <img src="@/assets/common/img.jpeg" alt="">
                     <div>
-                      <p><span class="col">朱继柳</span> 发布了 第3期“传智大讲堂”互动讨论获奖名单公布</p>
+                      <p>
+                        <span class="col">朱继柳</span> 发布了
+                        第3期“传智大讲堂”互动讨论获奖名单公布
+                      </p>
                       <p>2018-07-21 15:21:38</p>
                     </div>
                   </div>
@@ -85,7 +97,8 @@
           <div slot="header" class="header">
             <span>绩效指数</span>
           </div>
-        <!-- 放置雷达图 -->
+          <!-- 放置雷达图 -->
+          <radar />
         </el-card>
         <!-- 帮助连接 -->
         <el-card class="box-card">
@@ -122,26 +135,24 @@
 
 <script>
 import WorkCalendar from './components/work-calendar'
+import Radar from './components/radar'
 import { mapGetters, createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('user')
 export default {
   name: 'Dashboard',
+  components: {
+    WorkCalendar,
+    Radar
+  },
   data() {
     return {
       defaultImg: require('@/assets/common/head.jpg')
     }
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'staffPhoto'
-    ]),
+    ...mapGetters(['name', 'staffPhoto']),
     ...mapState(['userInfo'])
-  },
-  components: {
-    WorkCalendar
   }
-
 }
 </script>
 
@@ -157,7 +168,7 @@ export default {
     height: 100px;
     border-radius: 50%;
     background: #999;
-          img {
+    img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
@@ -202,7 +213,7 @@ export default {
     }
   }
 }
-.header-card{
+.header-card {
   position: relative;
   .header {
     position: absolute;
@@ -226,7 +237,7 @@ export default {
     min-height: 350px;
     .item {
       display: flex;
-      padding:18px 0 10px;
+      padding: 18px 0 10px;
       border-bottom: solid 1px #ccc;
       .col {
         color: #8a97f8;
@@ -237,7 +248,7 @@ export default {
         border-radius: 50%;
         margin-right: 10px;
       }
-      p{
+      p {
         padding: 0 0 8px;
       }
     }
@@ -252,7 +263,7 @@ export default {
   padding: 30px 0 12px;
   .sideBtn {
     padding: 16px 26px;
-    font-size:16px;
+    font-size: 16px;
     margin: 10px 5px;
   }
 }
@@ -262,7 +273,7 @@ export default {
     display: inline-block;
     width: 76px;
     height: 76px;
-    background: url('./../../assets/common/icon.png') no-repeat;
+    background: url("./../../assets/common/icon.png") no-repeat;
   }
   .iconGuide {
     background-position: 0 0;
