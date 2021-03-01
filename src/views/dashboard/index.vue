@@ -87,8 +87,8 @@
           <div class="sideNav">
             <el-button class="sideBtn" @click="showDialog=true">加班离职</el-button>
             <el-button class="sideBtn">请假调休</el-button>
-            <el-button class="sideBtn">审批列表</el-button>
-            <el-button class="sideBtn">我的信息</el-button>
+            <el-button class="sideBtn" @click="$router.push('/users/approvals')">审批列表</el-button>
+            <el-button class="sideBtn" @click="$router.push('/users/info')">我的信息</el-button>
           </div>
         </el-card>
 
@@ -132,7 +132,7 @@
     </el-row>
     <!-- 离职审批弹层 -->
     <!-- 弹出层 -->
-    <el-dialog :visible="showDialog" title="离职申请">
+    <el-dialog :visible="showDialog" title="离职申请" @close="btnCancel">
       <el-form
         ref="ruleForm"
         :model="ruleForm"
@@ -161,8 +161,8 @@
       </el-form>
       <el-row slot="footer" type="flex" justify="center">
         <el-col :span="6">
-          <el-button size="small" type="primary">确定</el-button>
-          <el-button size="small">取消</el-button>
+          <el-button size="small" type="primary" @click="btnOK">确定</el-button>
+          <el-button size="small" @click="btnCancel">取消</el-button>
         </el-col>
       </el-row>
     </el-dialog>
@@ -172,6 +172,7 @@
 <script>
 import WorkCalendar from './components/work-calendar'
 import Radar from './components/radar'
+import { startProcess } from '@/api/approvals'
 import { mapGetters, createNamespacedHelpers } from 'vuex'
 const { mapState } = createNamespacedHelpers('user')
 export default {
@@ -199,6 +200,28 @@ export default {
   computed: {
     ...mapGetters(['name', 'staffPhoto']),
     ...mapState(['userInfo'])
+  },
+  methods: {
+    btnOK() {
+      this.$refs.ruleForm.validate(async validate => {
+        if (validate) {
+          const data = { ...this.ruleForm, userId: this.userInfo.userId }
+          await startProcess(data)
+          this.$message.success('提交流程成功')
+          this.btnCancel()
+        }
+      })
+    },
+    btnCancel() {
+      this.showDialog = false
+      this.$refs.ruleForm.resetFields()
+      this.ruleForm = {
+        exceptTime: '',
+        reason: '',
+        processKey: 'process_dimission', // 特定的审批
+        processName: '离职'
+      }
+    }
   }
 }
 </script>
