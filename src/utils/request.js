@@ -12,7 +12,7 @@ service.interceptors.response.use(function(response) {
   // !统一错误处理
   // 后端在响应错误的时候，有 2 种方式
   // 第一种：如果业务错了，返回错误的 HTTP 状态码，例如 400、401、403
-  // 第二种：如果业务错了，返回的还是成功的状态码 200，只不过会把错误的信息放到真正的数据（data）里面，会把错误信息作为数据的一部分进行返回
+  // 第二种：如果业务错了，返回的还是成功的状态码 200，会把错误信息作为数据的一部分进行返回
   // axios 默认加了一个 data
   const { success, message, data } = response.data
   if (success) {
