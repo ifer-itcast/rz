@@ -32,15 +32,16 @@ const actions = {
   async getUserInfo(context) {
     // !#2
     console.log('#2')
-    const result = await getUserInfo()
-    /* const result = await getUserInfo().catch(e => {
+    try {
+      const result = await getUserInfo()
+      // 获取用户ID获取用户的详情
+      const baseInfo = await getUserDetailById(result.userId)
+      context.commit('setUserInfo', { ...result, ...baseInfo }) // 合并 2 个接口获取的结果并设置到 Vuex
+      return result // 后续做权限处理时需要用到
+    } catch (e) {
       // !#5
-      console.log(e)
-    }) */
-    // 获取用户ID获取用户的详情
-    const baseInfo = await getUserDetailById(result.userId)
-    context.commit('setUserInfo', { ...result, ...baseInfo }) // 合并 2 个接口获取的结果并设置到 Vuex
-    return result // 后续做权限处理时需要用到
+      console.log('#5')
+    }
   },
   logout(context) {
     // 删除 token

@@ -4,7 +4,7 @@ import router from '@/router'
 import { Message } from 'element-ui'
 import { getTimeStamp } from '@/utils/auth'
 
-const TIMEOUT = 3600
+const TIMEOUT = 3
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -24,6 +24,7 @@ service.interceptors.request.use(config => {
       // 跳转
       router.push('/login')
       // 返回
+      // 你在请求拦截器返回了一个错误的 Promise，会到哪里
       return Promise.reject(new Error('TOKEN 超时了'))
     }
     config.headers['Authorization'] = `Bearer ${store.getters.token}`
@@ -49,8 +50,8 @@ service.interceptors.response.use(response => {
 }, error => {
   // !#4
   console.log('#4')
-  // !之前我这里打错了
   Message.error(error.message)
+  // 你在响应拦截器，返回了一个错误的 Promise，会走哪里？
   return Promise.reject(error) // 返回执行错误，进入 catch
 })
 function isCheckTimeOut() {
