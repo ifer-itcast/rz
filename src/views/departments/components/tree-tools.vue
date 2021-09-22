@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     // 点击添加、编辑、删除时触发
-    operateDepts(type) {
+    async operateDepts(type) {
       if (type === 'add') {
         // add
         console.log('add')
@@ -50,13 +50,21 @@ export default {
         // edit
       } else {
         // del
-        this.$confirm('确定要删除该部门吗').then(() => {
+        /* this.$confirm('确定要删除该部门吗').then(() => {
           return delDepartments(this.treeNode.id)
         }).then(() => {
           // 通知父亲更新数据
           this.$emit('delDepts')
           this.$message.success('删除部门成功')
-        })
+        }) */
+        try {
+          await this.$confirm('确定要删除该部门吗')
+          await delDepartments(this.treeNode.id)
+          this.$emit('delDepts')
+          this.$message.success('删除部门成功')
+        } catch (e) {
+          this.$message('已取消')
+        }
       }
     }
   }
