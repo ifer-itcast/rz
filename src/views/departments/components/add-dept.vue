@@ -44,6 +44,8 @@ export default {
       // 要和同级部门的 name 去比较，不能有重复的
       const { depts } = await getDepartments()
       // 筛选当前点击项的所有子部门
+      // 从所有的部门里面看一下有没有一项的 pid 等于当前点击的这一项的 id，有的话就说是当前点击的子部门
+      // 在看一下子部门里面有没有一项的 name 等于我输入的 value
       const isRepeat = depts.filter(item => item.pid === this.treeNode.id).some(item => item.name === value)
       isRepeat ? callback(new Error(`同级部门下已经存在${value}这个部门了`)) : callback()
     }
@@ -52,7 +54,8 @@ export default {
       // 先要获取最新的组织架构数据
       const { depts } = await getDepartments()
       // 并且 value 存在，不为空
-      const isRepeat = depts.some(item => item.code === value && value)
+      // 看一下所有部门里面有没有一项的编码等于我输入的编码
+      const isRepeat = depts.some(item => item.code === value)
       isRepeat ? callback(new Error(`组织架构中已经有部门使用${value}编码`)) : callback()
     }
     return {
